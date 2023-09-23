@@ -1,0 +1,5 @@
+#barbecue-bg {
+  background-image: url("../resources/meat.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
