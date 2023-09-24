@@ -4,9 +4,11 @@ import logo from '../resources/logo.png';
 import { TextField, Button } from '@mui/material';
 import { authenticate } from '../services/login';
 import { LoginUser } from '../types/LoginUser';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
+  const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .required('Campo de usuário é obrigatório'),
@@ -20,8 +22,12 @@ function Login() {
       password: '',
     } as LoginUser,
     validationSchema,
-    onSubmit: (values) => {
-      authenticate(values)
+    onSubmit: async (values) => {
+      const authCode = await authenticate(values)
+      console.log('authCode', authCode)
+      if (authCode === 201) {
+        navigate('/system');
+      }
     },
   });
 
