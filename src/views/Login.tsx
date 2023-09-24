@@ -1,4 +1,3 @@
-import React from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import logo from '../resources/logo.png';

@@ -1,9 +1,7 @@
-import React from 'react';
-
 function System() {
   return (
     <div className="System">
-      System
+      <h1>AUTENTICADO</h1>
     </div>
   );
 }
