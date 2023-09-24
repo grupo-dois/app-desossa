@@ -35,22 +35,22 @@ function Login() {
             />
           </div>
           <form onSubmit={formik.handleSubmit}>
-            <div className="mb-8">
-            <TextField
-              fullWidth={true}
-              id="username"
-              name="username"
-              label="Usuário"
-              variant="outlined"
-              margin="normal"
-              value={formik.values.username}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.username && Boolean(formik.errors.username)}
-              helperText={formik.touched.username && formik.errors.username}
-            />
+            <div className="mb-4">
+              <TextField
+                fullWidth={true}
+                id="username"
+                name="username"
+                label="Usuário"
+                variant="outlined"
+                margin="normal"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+                helperText={formik.touched.username && formik.errors.username}
+              />
             </div>
-            <div className="mb-8">
+            <div className="mb-2">
               <TextField
                 fullWidth={true}
                 id="password"
