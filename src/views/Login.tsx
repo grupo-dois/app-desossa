@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import logo from '../resources/logo.png';
-import { TextField, Button } from '@mui/material'
+import { TextField, Button } from '@mui/material';
+import { authenticate } from '../services/login';
+import { LoginUser } from '../types/LoginUser';
 import './Login.css';
 
 function Login() {
@@ -16,10 +18,10 @@ function Login() {
     initialValues: {
       username: '',
       password: '',
-    },
+    } as LoginUser,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      authenticate(values)
     },
   });
 
@@ -35,7 +37,7 @@ function Login() {
             />
           </div>
           <form onSubmit={formik.handleSubmit}>
-            <div className="mb-4">
+            <div className="mb-1">
               <TextField
                 fullWidth={true}
                 id="username"
@@ -50,7 +52,7 @@ function Login() {
                 helperText={formik.touched.username && formik.errors.username}
               />
             </div>
-            <div className="mb-2">
+            <div className="mb-4">
               <TextField
                 fullWidth={true}
                 id="password"
