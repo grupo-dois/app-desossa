@@ -1,9 +1,29 @@
 import React from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import logo from '../resources/logo.png';
 import { TextField, Button } from '@mui/material'
 import './Login.css';
 
 function Login() {
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required('Campo de usuário é obrigatório'),
+    password: Yup.string()
+      .required('Campo de senha é obrigatório')
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
   return (
     <div className="h-screen flex">
       <div className="w-1/3">
@@ -15,15 +35,50 @@ function Login() {
               alt="Pedra Moura"
             />
           </div>
-          <div className="mb-8">
-            <TextField sx={{ width: '100%' }} label="Usuário" />
-          </div>
-          <div className="mb-8">
-            <TextField sx={{ width: '100%' }} label="Senha" type="password" />
-          </div>
-          <div w-full>
-            <Button variant="contained" fullWidth={true}>Entrar</Button>
-          </div>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="mb-8">
+            <TextField
+              fullWidth={true}
+              id="username"
+              name="username"
+              label="Usuário"
+              variant="outlined"
+              margin="normal"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
+            />
+            </div>
+            <div className="mb-8">
+              <TextField
+                fullWidth={true}
+                id="password"
+                name="password"
+                label="Senha"
+                type="password"
+                variant="outlined"
+                margin="normal"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
+              />
+            </div>
+            <div>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={!formik.isValid}
+                fullWidth={true}
+              >
+                Entrar
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
       <div id="barbecue-bg" className="w-2/3" />
