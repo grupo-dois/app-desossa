@@ -24,7 +24,6 @@ function Login() {
     validationSchema,
     onSubmit: async (values) => {
       const authCode = await authenticate(values)
-      console.log('authCode', authCode)
       if (authCode === 201) {
         navigate('/system');
       }
