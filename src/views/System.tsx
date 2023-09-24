@@ -1,9 +1,21 @@
+import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import { logout } from '../services/login';
 import { useNavigate } from 'react-router-dom';
 
 function System() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    checkForToken()
+  }, []);
+
+  const checkForToken = () => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/')
+    }
+  }
 
   const logoutUser = () => {
     logout();
