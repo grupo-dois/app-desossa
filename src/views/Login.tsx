@@ -1,13 +1,15 @@
+import { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import logo from '../resources/logo.png';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Alert } from '@mui/material';
 import { authenticate } from '../services/login';
 import { LoginUser } from '../types/LoginUser';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
+  const [showAuthError, setShowAuthError] = useState(false);
   const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -23,10 +25,13 @@ function Login() {
     } as LoginUser,
     validationSchema,
     onSubmit: async (values) => {
+      setShowAuthError(false)
       const authCode = await authenticate(values)
       if (authCode === 201) {
         navigate('/system');
       }
+      
+      setShowAuthError(true)
     },
   });
 
@@ -73,6 +78,11 @@ function Login() {
                 helperText={formik.touched.password && formik.errors.password}
               />
             </div>
+            {showAuthError && (
+              <div className="mb-4">
+                <Alert severity="error">Senha errada. Tente novamente.</Alert>
+              </div>
+            )}
             <div>
               <Button
                 type="submit"

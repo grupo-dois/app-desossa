@@ -8,7 +8,7 @@ function System() {
 
   useEffect(() => {
     checkForToken()
-  }, []);
+  });
 
   const checkForToken = () => {
     const token = localStorage.getItem('token')
