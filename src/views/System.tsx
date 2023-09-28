@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
-import { Button } from '@mui/material';
-import { logout } from '../services/login';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Navbar } from '../components'
+import { Screens } from '../enums/Screens'
 
 function System() {
+  const [currentScreen, setScreen] = useState<Screens>(Screens.HOME);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,24 +18,23 @@ function System() {
     }
   }
 
-  const logoutUser = () => {
-    logout();
-    navigate('/');
+  const defineScreen = (currentScreen: Screens) => {
+    const screens = new Map();
+    screens.set(0, "Home")
+    screens.set(1, "Adicionar carcaça")
+    screens.set(2, "Relatórios")
+    screens.set(3, "Suporte")
+    screens.set(4, "Perfil")
+
+    return screens.get(currentScreen)
   }
 
   return (
-    <div className="System">
+    <div className="System bg-slate-100 h-screen">
+      <Navbar setScreen={setScreen} />
       <h1 className="text-lg">AUTENTICADO</h1>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          logoutUser();
-        }}
-      >
-        Logout
-      </Button>
+      {/* CRIAR COMPONENTE GENÉRICO AQUI */}
+      <h1 className="text-lg">Tela atual: { defineScreen(currentScreen) }</h1>
     </div>
   );
 }
