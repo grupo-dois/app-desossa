@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { logout } from './services/login';
 
 const instance = axios.create({
   baseURL: 'http://localhost:3000',
@@ -14,6 +15,20 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  (error: AxiosError | Error) => {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      logout()
+      window.location.href = '/'
+    }
+
     return Promise.reject(error);
   }
 );
