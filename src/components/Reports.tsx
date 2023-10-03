@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CattleTable from './CattleTable'
+import WeightChart from './WeightChart'
 import { getAllCattle } from "../services/cattle"
 import { Cattle as CattleType } from '../types/Cattle'
 import {
@@ -65,7 +66,7 @@ const Reports: React.FC<Props> = () => {
         )}
         {reportType === ReportsType.WeightData && (
           <div>
-            Weight
+            <WeightChart data={allCattleData} />
           </div>
         )}
         {reportType === ReportsType.PerformanceData && (
