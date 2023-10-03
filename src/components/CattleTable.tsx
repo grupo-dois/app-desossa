@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, Pagination
+  Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination
 } from '@mui/material';
 import { Cattle as CattleType } from '../types/Cattle';
 
@@ -20,9 +20,11 @@ const CattleTable: React.FC<Props> = (props) => {
   }
 
   const formatDate = (dateString: string) => {
-    const ano = dateString.substring(0, 4);
-    const mes = dateString.substring(4, 2);
-    const dia = dateString.substring(6, 2);
+    const ano = dateString.substr(0, 4);
+    const mes = dateString.substr(4, 2);
+    const dia = dateString.substr(6, 2);
+
+    console.log('dateString', `${dia}/${mes}/${ano}`)
 
     return `${dia}/${mes}/${ano}`
   }

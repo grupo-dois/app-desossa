@@ -63,7 +63,7 @@ const Carcass: React.FC<Props> = () => {
 
   return (
     <form className='flex flex-col gap-y-4 max-w-5xl mx-auto py-16' onSubmit={formik.handleSubmit}>
-      <h1 className="text-lg">Meu Perfil</h1>
+      <h1 className="text-lg">Adicionar Carcaça</h1>
       <TextField
         label="Nome"
         id="nome"
