@@ -12,3 +12,9 @@ export async function getAllCattle(): Promise<CattleType[]> {
 
   return data
 }
+
+export async function addCattle(cattle: Omit<CattleType, "id">): Promise<void> {
+  await axios.post('bovinos', cattle)
+}
+
+

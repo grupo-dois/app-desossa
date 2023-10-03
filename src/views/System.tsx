@@ -30,7 +30,7 @@ function System() {
   }
 
   return (
-    <div className="System bg-slate-100 h-screen">
+    <div className="System bg-slate-100 h-full">
       <Navbar setScreen={setScreen} />
       <div id="dynamic-component">{ defineScreen(currentScreen) }</div>
     </div>
