@@ -11,14 +11,13 @@ interface Props {
 const CattleTable: React.FC<Props> = (props) => {
   const { data } = props;
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const itemsPerPage = 10;
+  const startIndex = (pageNumber - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   const handlePaginationChange = (event: {[key:string]: any}, pageNumber: number) => {
     setPageNumber(pageNumber);
   }
-
-  const itemsPerPage = 10;
-  const startIndex = (pageNumber - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
 
   return (
     <>
