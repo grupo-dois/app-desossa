@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button
+  Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, Pagination
 } from '@mui/material';
 import { Cattle as CattleType } from '../types/Cattle';
 
@@ -11,6 +11,14 @@ interface Props {
 const CattleTable: React.FC<Props> = (props) => {
   const { data } = props;
   const [pageNumber, setPageNumber] = useState<number>(1);
+
+  const handlePaginationChange = (event: {[key:string]: any}, pageNumber: number) => {
+    setPageNumber(pageNumber);
+  }
+
+  const itemsPerPage = 10;
+  const startIndex = (pageNumber - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   return (
     <>
@@ -39,7 +47,7 @@ const CattleTable: React.FC<Props> = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.slice(pageNumber - 1, pageNumber * 10).map((row: CattleType) => (
+            {data && data.slice(startIndex, endIndex).map((row: CattleType) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -56,16 +64,13 @@ const CattleTable: React.FC<Props> = (props) => {
             ))}
           </TableBody>
         </Table>
-        {pageNumber}
         {data && (
-          <div className={`flex ${pageNumber > 1 ? 'justify-between': 'flex-row-reverse'} m-5`}>
-            {pageNumber > 1 && (
-              <Button variant="contained" onClick={() => setPageNumber(pageNumber - 1)}>Anterior</Button>
-            )}
-            {pageNumber < data.length && (
-              <Button variant="contained" onClick={() => setPageNumber(pageNumber + 1)}>Próximo</Button>
-            )}
-          </div>
+          <Pagination
+            count={data.length / 10}
+            color="primary"
+            className="flex justify-center my-2"
+            onChange={handlePaginationChange}
+          />
         )}
       </TableContainer>
     </>
