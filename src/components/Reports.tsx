@@ -17,7 +17,7 @@ enum ReportsType {
 
 const Reports: React.FC<Props> = () => {
   const [allCattleData, setAllCattleData] = useState<CattleType[]>();
-  const [reportType, setReportType] = useState<ReportsType>();
+  const [reportType, setReportType] = useState<ReportsType>(ReportsType.CattleData);
 
   const loadCattleData = async () => {
     const allCattle = await getAllCattle();
