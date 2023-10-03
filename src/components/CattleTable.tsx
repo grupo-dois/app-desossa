@@ -15,8 +15,16 @@ const CattleTable: React.FC<Props> = (props) => {
   const startIndex = (pageNumber - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const handlePaginationChange = (event: {[key:string]: any}, pageNumber: number) => {
+  const handlePaginationChange = (event: { [key: string]: any }, pageNumber: number) => {
     setPageNumber(pageNumber);
+  }
+
+  const formatDate = (dateString: string) => {
+    const ano = dateString.substring(0, 4);
+    const mes = dateString.substring(4, 2);
+    const dia = dateString.substring(6, 2);
+
+    return `${dia}/${mes}/${ano}`
   }
 
   return (
@@ -54,8 +62,8 @@ const CattleTable: React.FC<Props> = (props) => {
                 <TableCell component="th" scope="row">
                   {row.nome}
                 </TableCell>
-                <TableCell align="right">{row.data_abate}</TableCell>
-                <TableCell align="right">{row.data_desossa}</TableCell>
+                <TableCell align="right">{formatDate(row.data_abate.toString())}</TableCell>
+                <TableCell align="right">{formatDate(row.data_desossa.toString())}</TableCell>
                 <TableCell align="right">{row.raca}</TableCell>
                 <TableCell align="right">{row.peso_carcaca}</TableCell>
                 <TableCell align="right">{row.responsavel_desossa}</TableCell>

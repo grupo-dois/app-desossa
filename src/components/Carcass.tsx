@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { addCattle } from '../services/cattle';
 import { useState } from 'react';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface Props {
 }
@@ -45,8 +47,8 @@ const Carcass: React.FC<Props> = () => {
 
         await addCattle({
           ...values,
-          data_abate: Math.round(values.data_abate.getTime() / 1000),
-          data_desossa: Math.round(values.data_desossa.getTime() / 1000),
+          data_abate: Number(format(values.data_abate, 'yyyyMMdd', { locale: ptBR })),
+          data_desossa: Number(format(values.data_desossa, 'yyyyMMdd', { locale: ptBR })),
           peso_carcaca: Number(values.peso_carcaca)
         })
 
