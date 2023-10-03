@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
-import { ChartType } from "../types/ChartType";
+import { Pie } from "react-chartjs-2";
 import { Cattle as CattleType } from '../types/Cattle';
+import { ChartType } from "../types/ChartType";
 import theme from '../theme';
 
 interface Props {
   data?: CattleType[],
 }
 
-const WeightChart: React.FC<Props> = (props) => {
+const PerformanceChart: React.FC<Props> = (props) => {
   const { data } = props;
   const [chartData, setChartData] = useState<ChartType>({
     labels: [] ,
@@ -23,30 +23,36 @@ const WeightChart: React.FC<Props> = (props) => {
     ]
   });
 
-  const calculateWeightWithFleshExtraction = (cattles: CattleType[]) => {
-    const dateSum = {} as { [key: string]: any };
+  const calculateEmployeePerformance = (cattles: CattleType[]) => {
+    const employeeSum = {} as { [key: string]: any };
+
     cattles.forEach(cattle => {
-      const fleshDate = `${cattle.data_desossa.toString().slice(6,8)}/${cattle.data_desossa.toString().slice(4,6)}`
-      if (!dateSum[fleshDate]) {
-        dateSum[fleshDate] = cattle.peso_carcaca;
-      } else {
-        dateSum[fleshDate] += cattle.peso_carcaca;
-      }
+        const responsavelDesossa = cattle.responsavel_desossa;
+        if (!employeeSum[responsavelDesossa]) {
+            employeeSum[responsavelDesossa] = cattle.peso_carcaca;
+        } else {
+            employeeSum[responsavelDesossa] += cattle.peso_carcaca;
+        }
     });
-    return dateSum;
+
+    return employeeSum;
   }
 
   useEffect(() => {
     if (data) {
-      const calculatedData = calculateWeightWithFleshExtraction(data)
+      const calculatedData = calculateEmployeePerformance(data)
       setChartData({
         labels: Object.keys(calculatedData),
         datasets: [
           {
-            label: "Peso (kg)",
+            label: "Peso extraído (kg)",
             data: Object.values(calculatedData),
             backgroundColor: [
               theme.palette.primary.main,
+              theme.palette.secondary.main,
+              '#3C1C08',
+              '#a1a1aa',
+              '#991b1b'
             ],
             borderColor: theme.palette.secondary.main,
             borderWidth: 2
@@ -57,8 +63,8 @@ const WeightChart: React.FC<Props> = (props) => {
   }, [data])
 
   return (
-    <div className="weight-chart w-1/2 m-auto mt-16">
-      <Bar
+    <div className="performance-chart w-96 m-auto mt-8">
+      <Pie
         data={chartData}
         options={{
           plugins: {
@@ -72,4 +78,4 @@ const WeightChart: React.FC<Props> = (props) => {
   )
 }
 
-export default WeightChart;
+export default PerformanceChart;
