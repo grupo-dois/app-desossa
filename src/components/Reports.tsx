@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import CattleTable from './CattleTable'
 import { getAllCattle } from "../services/cattle"
 import { Cattle as CattleType } from '../types/Cattle'
-import { InputLabel, Select, MenuItem, FormControl } from '@mui/material';
+import {
+  InputLabel, Select, MenuItem, FormControl,
+} from '@mui/material';
 
 interface Props {
 }
@@ -21,15 +24,17 @@ const Reports: React.FC<Props> = () => {
     setAllCattleData(allCattle);
   }
 
-  const showSelectedReport = (reportType: ReportsType | undefined) => {
+  const showSelectedReport = (reportType: ReportsType) => {
     const reportsScreens = new Map();
-    reportsScreens.set(ReportsType.CattleData, loadCattleData);
+    reportsScreens.set(ReportsType.CattleData, loadCattleData());
 
     return reportsScreens.get(reportType);
   }
 
   useEffect(() => {
-    showSelectedReport(reportType);
+    if (reportType) {
+      showSelectedReport(reportType);
+    }
   }, [reportType])
 
   const handleChange = (event: { [key: string]: any }) => {
@@ -38,7 +43,7 @@ const Reports: React.FC<Props> = () => {
 
   return (
     <div>
-      <div className="m-12">
+      <div className="m-8">
         <h1 className="text-xl mt-5 ml-2 mb-2">Selecione um relatório</h1>
         <FormControl sx={{ m: 1, minWidth: 320 }}>
           <InputLabel id="report-label">Relatório</InputLabel>
@@ -53,6 +58,21 @@ const Reports: React.FC<Props> = () => {
             <MenuItem value={ReportsType.PerformanceData}>Performance por responsável</MenuItem>
           </Select>
         </FormControl>
+      </div>
+      <div>
+        {reportType === ReportsType.CattleData && (
+          <CattleTable data={allCattleData} />
+        )}
+        {reportType === ReportsType.WeightData && (
+          <div>
+            Weight
+          </div>
+        )}
+        {reportType === ReportsType.PerformanceData && (
+          <div>
+            Performance
+          </div>
+        )}
       </div>
     </div>
   )

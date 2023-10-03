@@ -8,7 +8,7 @@ export async function getCattleCarcassExtractionByDay(): Promise<{ [key: string]
 }
 
 export async function getAllCattle(): Promise<CattleType[]> {
-  const { data } = await axios.get('bovinos/abates/diarios')
+  const { data } = await axios.get('bovinos')
 
   return data
 }
